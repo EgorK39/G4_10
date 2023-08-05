@@ -2,26 +2,37 @@ version: '3'
 
 services:
   web:
-    build: ./app
+    image: egork39/repo2:0.1
+    #    build: ./app
     command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8080
     volumes:
       - ./app/:/usr/src/app/
     ports:
       - 8080:8080
+    #    expose:
+    #      - 8080
     env_file:
       - ./.env.dev
     depends_on:
       - db
   db:
+#    image: egork39/repo3:0.1
     image: postgres:13.0-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.db
-#    environment:
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=my_password
-#      - POSTGRES_DB=docker_test
+  # environment:
+  #   - POSTGRES_USER=postgres
+  #   - POSTGRES_PASSWORD=my_password
+  #   - POSTGRES_DB=docker_test
 
+  nginx:
+    image: egork39/test:0.1
+    #    build: ./nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
 volumes:
   postgres_data:

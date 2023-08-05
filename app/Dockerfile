@@ -29,5 +29,8 @@ RUN chmod +x /usr/src/app/entrypoint.sh
 RUN pwd
 RUN ls -la
 
+
+
+
 # run entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
